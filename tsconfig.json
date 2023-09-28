@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["./src/**/*.vue"],
+    "files": ["./src/components/shims-vue.d.ts", "./auto-imports.d.ts", "./components.d.ts"]
+}
