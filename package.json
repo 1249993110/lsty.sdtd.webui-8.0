@@ -25,10 +25,10 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.3.4",
-    "sass": "^1.68.0",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "sass": "^1.69.0",
     "unplugin-auto-import": "^0.16.6",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.4.9"
+    "vite": "^4.4.11"
   }
 }

@@ -9,12 +9,21 @@ export const useTabsStore = defineStore('tabs', {
             isRouterAlive: true,
         };
     },
+    getters: {
+        includes() {
+            return this.paths.map((i) => {
+                return router.resolve({
+                    path: i,
+                }).name;
+            });
+        },
+    },
     actions: {
         add(path) {
             if (!this.paths.some((item) => item === path)) {
                 this.paths.push(path);
             }
-
+            
             router.push(path);
         },
         remove(path) {

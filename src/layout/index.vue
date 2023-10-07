@@ -12,7 +12,7 @@
                 <div class="router-view" v-if="tabsStore.isRouterAlive">
                     <router-view v-slot="{ Component }">
                         <transition mode="out-in">
-                            <keep-alive>
+                            <keep-alive :include="tabsStore.includes">
                                 <component :is="Component" />
                             </keep-alive>
                         </transition>
