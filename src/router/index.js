@@ -28,7 +28,13 @@ const routes = [
                 component: () => import('../views/Controls/OnlinePlayers.vue'),
                 meta: { requiresAuth: true },
             },
-        ]
+            {
+                path: 'history-players',
+                name: 'Controls.HistoryPlayers',
+                component: () => import('../views/Controls/HistoryPlayers.vue'),
+                meta: { requiresAuth: true },
+            },
+        ],
     },
     {
         path: '/login',
@@ -61,7 +67,7 @@ router.beforeEach(async (to, from) => {
         const userInfoStore = useUserInfoStore();
         if (!userInfoStore.isLoggedIn) {
             // 如果没有, 则重定向到登录页面
-            router.push({ path: '/login', query: { redirectPath: to.fullPath } })
+            router.push({ path: '/login', query: { redirectPath: to.fullPath } });
             return false;
         }
     }

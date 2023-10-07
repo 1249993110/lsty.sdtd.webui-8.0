@@ -12,8 +12,8 @@ export const getOnlinePlayers = () => {
  * 分页获取历史玩家
  * @returns
  */
-export const getHistoryPlayers = () => {
-    return http.get('/EntityManagement/HistoryPlayers');
+export const getHistoryPlayers = (params) => {
+    return http.get('/EntityManagement/HistoryPlayers', { params });
 };
 
 /**
@@ -23,7 +23,6 @@ export const getHistoryPlayers = () => {
 export const getPlayerInventory = (entityId) => {
     return http.get('/EntityManagement/PlayerInventory/' + entityId);
 };
-
 
 /**
  * 获取僵尸位置

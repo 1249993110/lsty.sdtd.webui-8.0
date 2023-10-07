@@ -1,6 +1,6 @@
 <template>
     <div class="online-players">
-        <el-table :data="tableData" border stripe height="100%" ref="tableRef" highlight-current-row @row-contextmenu="onContextmenu">
+        <el-table :data="tableData" border stripe height="100%" highlight-current-row ref="tableRef" @row-contextmenu="onContextmenu">
             <el-table-column type="index" label="序号" width="60"> </el-table-column>
             <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
             <el-table-column prop="name" label="玩家昵称" width="115" sortable> </el-table-column>
@@ -9,6 +9,7 @@
             <el-table-column prop="currentLife" label="存活时长" width="110" :formatter="format_currentLife" sortable> </el-table-column>
             <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
             <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
+            <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
             <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
             <el-table-column prop="killedZombies" label="击杀僵尸" width="105" sortable> </el-table-column>
             <el-table-column prop="killedPlayers" label="击杀玩家" width="105" sortable> </el-table-column>

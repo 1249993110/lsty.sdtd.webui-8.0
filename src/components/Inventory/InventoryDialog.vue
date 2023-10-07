@@ -26,7 +26,6 @@
 <script setup>
 import InventoryItem from './InventoryItem.vue';
 import { ElDialog } from 'element-plus';
-import { useVModels } from '@vueuse/core';
 
 const props = defineProps({
     title: {
@@ -41,9 +40,8 @@ const props = defineProps({
     },
 });
 
-const { title, visible } = useVModels(props);
-
 const emit = defineEmits(['onClosed']);
+const visible = ref(props.visible);
 
 const onClosed = () => {
     emit('onClosed');
