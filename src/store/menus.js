@@ -30,6 +30,11 @@ const tree = [
                 icon: 'user-solid',
             },
             {
+                path: 'live-chat',
+                label: '实时聊天',
+                icon: 'chat-dot-square',
+            },
+            {
                 path: 'chat-record',
                 label: '聊天记录',
                 icon: 'chat-line-square',
@@ -38,6 +43,11 @@ const tree = [
                 path: 'item-blocks',
                 label: '物品方块',
                 icon: 'list',
+            },
+            {
+                path: 'console',
+                label: '控制台',
+                icon: 'console',
             },
         ],
     },

@@ -10,7 +10,7 @@ export const useTabsStore = defineStore('tabs', {
         };
     },
     getters: {
-        includes() {
+        routeNames() {
             return this.paths.map((i) => {
                 return router.resolve({
                     path: i,

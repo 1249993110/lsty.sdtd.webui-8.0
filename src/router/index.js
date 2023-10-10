@@ -34,6 +34,112 @@ const routes = [
                 component: () => import('../views/Controls/HistoryPlayers.vue'),
                 meta: { requiresAuth: true },
             },
+            {
+                path: 'live-chat',
+                name: 'Controls.LiveChat',
+                component: () => import('../views/Controls/LiveChat.vue'),
+            },
+            {
+                path: 'chat-record',
+                name: 'Controls.ChatRecord',
+                component: () => import('../views/Controls/ChatRecord.vue'),
+            },
+            {
+                path: 'item-blocks',
+                name: 'Controls.ItemBlocks',
+                component: () => import('../views/Controls/ItemBlocks.vue'),
+            },
+            {
+                path: 'console',
+                name: 'Controls.Console',
+                component: () => import('../views/Controls/Console.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions',
+        component: Layout,
+        children: [
+            {
+                path: 'global-settings',
+                name: 'Functions.GlobalSettings',
+                component: () => import('../views/Functions/GlobalSettings.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions/points-system',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.PointsSystem.Settings',
+                component: () => import('../views/Functions/PointsSystem/Settings.vue'),
+            },
+            {
+                path: 'management',
+                name: 'Functions.PointsSystem.Management',
+                component: () => import('../views/Functions/PointsSystem/Management/index.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions/game-store',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.GameStore.Settings',
+                component: () => import('../views/Functions/GameStore/Settings.vue'),
+            },
+            {
+                path: 'management',
+                name: 'Functions.GameStore.Management',
+                component: () => import('../views/Functions/GameStore/Management/index.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions/tele-system/friend',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.TeleSystem.Friend.Settings',
+                component: () => import('../views/Functions/TeleSystem/TeleportFriend/Settings.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions/tele-system/city',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.TeleSystem.TeleportCity.Settings',
+                component: () => import('../views/Functions/TeleSystem/TeleportCity/Settings.vue'),
+            },
+            {
+                path: 'management',
+                name: 'Functions.TeleSystem.TeleportCity.Management',
+                component: () => import('../views/Functions/TeleSystem/TeleportCity/Management/index.vue'),
+            },
+        ],
+    },
+    {
+        path: '/functions/tele-system/home',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.TeleSystem.TeleportHome.Settings',
+                component: () => import('../views/Functions/TeleSystem/TeleportHome/Settings.vue'),
+            },
+            {
+                path: 'management',
+                name: 'Functions.TeleSystem.TeleportHome.Management',
+                component: () => import('../views/Functions/TeleSystem/TeleportHome/Management/index.vue'),
+            },
         ],
     },
     {

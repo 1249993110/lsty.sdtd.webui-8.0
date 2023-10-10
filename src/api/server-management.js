@@ -28,7 +28,7 @@ export const sendGlobalMessage = (message) => {
  * 执行控制台命令
  * @returns
  */
-export const executeConsoleCommand = (command, inMainThread = true) => {
+export const executeConsoleCommand = (command, inMainThread = false) => {
     return http.get('/ServerManagement/ExecuteConsoleCommand', {
         params: {
             command,

@@ -13,7 +13,7 @@ export const getOnlinePlayers = () => {
  * @returns
  */
 export const getHistoryPlayers = (params) => {
-    return http.get('/EntityManagement/HistoryPlayers', { params });
+    return http.get('/EntityManagement/HistoryPlayers', { params: params });
 };
 
 /**
