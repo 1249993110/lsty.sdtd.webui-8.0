@@ -44,6 +44,6 @@ export const deletePointsInfoByIds = (ids) => {
  * 更新积分
  * @returns
  */
- export const updatePointsInfo = (params) => {
-    return http.put('/PointsInfo', params);
+ export const updatePointsInfo = (id, data) => {
+    return http.put('/PointsInfo/' + id, data);
 };

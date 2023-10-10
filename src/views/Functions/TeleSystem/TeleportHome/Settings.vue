@@ -68,6 +68,9 @@
                 <el-button type="primary" @click="save">保存</el-button>
             </el-form-item>
         </el-form>
+        <div>
+            <el-text style="color: green">提示: 游戏内输入setHome+空格+home名称 保存当前坐标, 输入delHome+空格+home名称 删除home</el-text>
+        </div>
     </el-card>
 </template>
 
