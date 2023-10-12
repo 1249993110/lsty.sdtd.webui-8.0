@@ -62,6 +62,18 @@ const tree = [
                 icon: 'settings',
             },
             {
+                path: 'game-notice',
+                label: '游戏公告',
+                icon: 'notice',
+                children: [
+                    {
+                        path: 'settings',
+                        label: '配置',
+                        icon: 'settings',
+                    },
+                ],
+            },
+            {
                 path: 'points-system',
                 label: '积分系统',
                 icon: 'coin',

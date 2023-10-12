@@ -68,6 +68,17 @@ const routes = [
         ],
     },
     {
+        path: '/functions/game-notice',
+        component: Layout,
+        children: [
+            {
+                path: 'settings',
+                name: 'Functions.GameNotice.Settings',
+                component: () => import('../views/Functions/GameNotice/Settings.vue'),
+            },
+        ],
+    },
+    {
         path: '/functions/points-system',
         component: Layout,
         children: [
