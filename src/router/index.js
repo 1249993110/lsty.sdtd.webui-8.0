@@ -45,6 +45,11 @@ const routes = [
                 component: () => import('../views/Controls/ChatRecord.vue'),
             },
             {
+                path: 'blacklist',
+                name: 'Controls.Blacklist',
+                component: () => import('../views/Controls/Blacklist/index.vue'),
+            },
+            {
                 path: 'item-blocks',
                 name: 'Controls.ItemBlocks',
                 component: () => import('../views/Controls/ItemBlocks.vue'),

@@ -30,14 +30,13 @@
 </template>
 
 <script setup>
-import { useUserInfoStore } from '../store/user-info';
-import { useTabsStore } from '../store/tabs';
-import { useMenusStore } from '../store/menus';
-import myconfirm from '../utils/myconfirm';
-import { logout } from '../api/account';
-import { useSidebarStore } from '../store/sidebar';
+import { useUserInfoStore } from '~/store/user-info';
+import { useTabsStore } from '~/store/tabs';
+import { useMenusStore } from '~/store/menus';
+import myconfirm from '~/utils/myconfirm';
+import { logout } from '~/api/account';
+import { useSidebarStore } from '~/store/sidebar';
 import screenfull from 'screenfull';
-import { ElMessage } from 'element-plus';
 import { promiseTimeout } from '@vueuse/core';
 
 const title = import.meta.env.VITE_APP_TITEL;
@@ -122,7 +121,7 @@ onKeyStroke('F11', (e) => {
     height: 100%;
     display: flex;
     align-items: center;
-    background-color: #1f2b35;
+    background-color: #1f2b35af;
     color: floralwhite;
     padding: 0 6px;
 

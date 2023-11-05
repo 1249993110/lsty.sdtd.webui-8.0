@@ -44,3 +44,51 @@ export const executeConsoleCommand = (command, inMainThread = false) => {
 export const getItemBlocks = (params) => {
     return http.get('/ServerManagement/ItemBlocks', { params: params });
 };
+
+/**
+ * 获取白名单
+ * @returns
+ */
+export const getWhitelist = () => {
+    return http.get('/ServerManagement/Whitelist');
+};
+
+/**
+ * 新增白名单
+ * @returns
+ */
+export const addWhitelist = (data) => {
+    return http.post('/ServerManagement/Whitelist', data);
+};
+
+/**
+ * 删除白名单
+ * @returns
+ */
+export const deteleWhitelist = (data) => {
+    return http.delete('/ServerManagement/Whitelist', { data: data });
+};
+
+/**
+ * 获取黑名单
+ * @returns
+ */
+export const getBlacklist = () => {
+    return http.get('/ServerManagement/Blacklist');
+};
+
+/**
+ * 新增黑名单
+ * @returns
+ */
+export const addBlacklist = (data) => {
+    return http.post('/ServerManagement/Blacklist', data);
+};
+
+/**
+ * 删除黑名单
+ * @returns
+ */
+export const deteleBlacklist = (data) => {
+    return http.delete('/ServerManagement/Blacklist', { data: data });
+};

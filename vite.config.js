@@ -7,6 +7,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 process.env.BROWSER = 'chrome';
 
+const pathSrc = path.resolve(__dirname, './src')
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd());
@@ -29,6 +31,7 @@ export default defineConfig(({ mode }) => {
                     'vue-router',
                     'pinia',
                     '@vueuse/core',
+                    'vue-i18n',
                 ],
 
                 // Filepath to generate corresponding .d.ts file.
@@ -40,10 +43,14 @@ export default defineConfig(({ mode }) => {
                 // see https://github.com/unjs/unimport/pull/15 and https://github.com/unjs/unimport/pull/72
                 vueTemplate: false,
 
-                // resolvers: [ElementPlusResolver()], // 已全局引入, 无需再按需引入
+                resolvers: [ElementPlusResolver()], // 自动导入element API
             }),
             Components({
-                resolvers: [ElementPlusResolver()], // 生成 ElementPlus 组件 ts 语法提示
+                resolvers: [
+                    ElementPlusResolver({
+                        importStyle: 'sass',
+                    }),
+                ], // 导入element组件与样式
                 dts: true,
             }),
         ],
@@ -73,7 +80,15 @@ export default defineConfig(({ mode }) => {
         },
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, './src'),
+                '~/': `${pathSrc}/`,
+            },
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    // define global scss variable
+                    // additionalData: `@use '~/assets/styles/common.scss' as *;`,
+                },
             },
         },
     };

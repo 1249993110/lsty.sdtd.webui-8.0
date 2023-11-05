@@ -27,9 +27,9 @@ export default {
 </script>
 
 <script setup>
-import * as api from '@/api/city-location.js';
+import * as api from '~/api/city-location.js';
 import { Edit, Plus, Delete, Search, Refresh, FolderAdd } from '@element-plus/icons-vue';
-import myconfirm from '@/utils/myconfirm';
+import myconfirm from '~/utils/myconfirm';
 import AddOrUpdateCityLocation from './AddOrUpdateCityLocation.vue';
 
 const tableData = ref([]);

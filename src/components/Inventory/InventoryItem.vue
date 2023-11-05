@@ -18,8 +18,6 @@
 </template>
 
 <script setup>
-import { ElTooltip, ElImage } from 'element-plus';
-
 defineProps({
     item: {
         type: Object,

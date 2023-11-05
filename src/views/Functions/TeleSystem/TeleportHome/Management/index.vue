@@ -51,9 +51,9 @@ export default {
 </script>
 
 <script setup>
-import * as api from '@/api/home-location.js';
+import * as api from '~/api/home-location.js';
 import { Edit, Plus, Delete, Search, Refresh, FolderAdd } from '@element-plus/icons-vue';
-import myconfirm from '@/utils/myconfirm';
+import myconfirm from '~/utils/myconfirm';
 import AddOrUpdateHomeLocation from './AddOrUpdateHomeLocation.vue';
 
 const tableData = ref([]);

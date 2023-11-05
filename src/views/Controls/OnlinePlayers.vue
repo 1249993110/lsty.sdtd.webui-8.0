@@ -32,12 +32,11 @@ export default {
 
 <script setup>
 import ContextMenu from '@imengyu/vue3-context-menu';
-import * as sdtdConsole from '@/api/sdtd-console';
-import { getOnlinePlayers } from '@/api/entity-management';
-import { showInventory } from '@/components/Inventory/index.js';
-import myprompt from '@/utils/myprompt';
-import myconfirm from '@/utils/myconfirm';
-import { ElMessage } from 'element-plus';
+import * as sdtdConsole from '~/api/sdtd-console';
+import { getOnlinePlayers } from '~/api/entity-management';
+import { showInventory } from '~/components/Inventory/index.js';
+import myprompt from '~/utils/myprompt';
+import myconfirm from '~/utils/myconfirm';
 import axios from 'axios';
 
 const tableData = ref([]);

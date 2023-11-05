@@ -42,8 +42,7 @@ export default {
 </script>
 
 <script setup>
-import { ElMessage } from 'element-plus';
-import * as api from '@/api/settings.js';
+import * as api from '~/api/settings.js';
 
 const formModel = reactive({});
 const formRef = ref();

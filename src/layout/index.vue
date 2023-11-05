@@ -1,6 +1,6 @@
 <template>
     <el-container class="layout">
-        <el-header class="header" height="48px">
+        <el-header height="48px">
             <Header />
         </el-header>
         <el-container class="under-header">
@@ -47,16 +47,16 @@ const sidebarWidth = computed(() => (sidebarStore.isCollapse ? '64px' : '200px')
     }
     .el-main {
         padding: 4px;
-        background-color: #f0f2f5;
+        background-color: #f0f2f5af;
         :deep(.el-tabs) {
             .el-tabs__header {
                 margin: 0;
-                background-color: #fff;
+                background-color: #ffffffaf;
             }
         }
     }
     .el-footer {
-        background-color: #f0f2f5;
+        background-color: #f0f2f5af;
     }
 
     .under-header {
@@ -68,77 +68,83 @@ const sidebarWidth = computed(() => (sidebarStore.isCollapse ? '64px' : '200px')
         }
 
         .router-view {
-            height: calc(100% - 41px - 24px);
+            height: calc(100% - 80px);
             overflow: auto;
-            padding: 12px 16px;
+            padding: 20px;
 
-            --search-box-height: 80px;
-            --search-box-bottom: 12px;
-            :deep(.search-box) {
-                border-radius: 2px;
-                height: var(--search-box-height);
-                background-color: #fff;
-                display: flex;
-                flex-flow: row wrap;
-                align-content: space-evenly;
-                align-items: center;
-                margin-bottom: var(--search-box-bottom);
-
-                .keyword {
-                    width: 300px;
-                }
-                .el-button {
-                    width: 74px;
-                }
-
-                .el-input + .el-button {
-                    margin-left: 24px;
-                }
-
-                .label {
-                    font-size: 14px;
-                    color: var(--el-text-color-regular);
-                    margin-left: 24px;
-                    margin-right: 6px;
-                }
+            & > div {
+                height: 100%;
             }
+            // --search-box-height: 80px;
+            // --search-box-bottom: 12px;
+            // :deep(.search-box) {
+            //     border-radius: 2px;
+            //     height: var(--search-box-height);
+            //     background-color: #fff;
+            //     display: flex;
+            //     flex-flow: row wrap;
+            //     align-content: space-evenly;
+            //     align-items: center;
+            //     margin-bottom: var(--search-box-bottom);
 
-            :deep(.table-box) {
-                border-radius: 2px;
-                background-color: #fff;
-                height: calc(100% - var(--search-box-height) - var(--search-box-bottom));
+            //     .keyword {
+            //         width: 300px;
+            //     }
+            //     .el-button {
+            //         width: 74px;
+            //     }
 
-                --operation-height: 50px;
-                --footer-height: 50px;
-                --el-table-height: calc(100% - var(--operation-height) - var(--footer-height));
+            //     .el-input + .el-button {
+            //         margin-left: 24px;
+            //     }
 
-                .operation {
-                    padding-left: 16px;
-                    height: var(--operation-height);
-                    display: flex;
-                    flex-flow: row;
-                    align-items: center;
-                    overflow: auto;
+            //     .label {
+            //         font-size: 14px;
+            //         color: var(--el-text-color-regular);
+            //         margin-left: 24px;
+            //         margin-right: 6px;
+            //     }
+            // }
 
-                    .el-button {
-                        width: 74px;
-                    }
+            // :deep(.table-box) {
+            //     border-radius: 2px;
+            //     background-color: #fff;
+            //     height: calc(100% - var(--search-box-height) - var(--search-box-bottom));
 
-                    .el-pagination {
-                        box-sizing: border-box;
-                    }
+            //     --operation-height: 50px;
+            //     --footer-height: 50px;
+            //     --el-table-height: calc(100% - var(--operation-height) - var(--footer-height));
 
-                    .el-radio-group {
-                        margin-left: auto;
-                        margin-right: 16px;
-                        min-width: 168px;
-                    }
-                }
+            //     .operation {
+            //         padding-left: 16px;
+            //         height: var(--operation-height);
+            //         display: flex;
+            //         flex-flow: row;
+            //         align-items: center;
+            //         overflow: auto;
 
-                .el-table {
-                    height: var(--el-table-height);
-                }
-            }
+            //         .el-button {
+            //             width: 74px;
+            //         }
+
+            //         .el-pagination {
+            //             box-sizing: border-box;
+            //         }
+
+            //         .el-radio-group {
+            //             margin-left: auto;
+            //             margin-right: 16px;
+            //             min-width: 168px;
+            //         }
+            //     }
+            // }
+
+            // :deep(.table-container) {
+            //     .el-table {
+            //         background-color: #ffffffaf;
+            //         //height: var(--el-table-height);
+            //     }
+            // }
         }
     }
 }

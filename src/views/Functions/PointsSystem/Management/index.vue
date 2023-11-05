@@ -50,9 +50,9 @@ export default {
 </script>
 
 <script setup>
-import * as api from '@/api/points-info.js';
+import * as api from '~/api/points-info.js';
 import { Edit, Plus, Delete, Search, Refresh, FolderAdd } from '@element-plus/icons-vue';
-import myconfirm from '@/utils/myconfirm';
+import myconfirm from '~/utils/myconfirm';
 import AddOrUpdatePointsInfo from './AddOrUpdatePointsInfo.vue';
 
 const tableData = ref([]);

@@ -16,8 +16,8 @@ export default {
 
 <script setup>
 import moment from 'moment';
-import { sendGlobalMessage } from '@/api/server-management';
-import { emitter, eventTypes } from '@/utils/event-hub';
+import { sendGlobalMessage } from '~/api/server-management';
+import { emitter, eventTypes } from '~/utils/event-hub';
 
 let contentCount = 0;
 const contentMaxCount = 1000;

@@ -39,7 +39,7 @@ export default {
 };
 </script>
 <script setup>
-import { getChatRecord } from '@/api/chat-record';
+import { getChatRecord } from '~/api/chat-record';
 
 const tableData = ref([]);
 const queryParams = reactive({

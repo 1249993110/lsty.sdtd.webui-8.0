@@ -1,7 +1,6 @@
 import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
-import localeZH from 'element-plus/es/locale/lang/zh-cn';
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 
 export default (app) => {
-    app.use(ElementPlus, { locale: localeZH });
+    app.use(ElementPlus, { locale: zhCn });
 };

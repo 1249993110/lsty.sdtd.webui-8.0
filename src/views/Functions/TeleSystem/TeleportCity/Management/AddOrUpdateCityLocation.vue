@@ -21,8 +21,7 @@
 </template>
 
 <script setup>
-import { ElMessage, ElLoading } from 'element-plus';
-import * as api from '@/api/city-location.js';
+import * as api from '~/api/city-location.js';
 
 const isAdd = ref(false);
 const visible = ref(false);

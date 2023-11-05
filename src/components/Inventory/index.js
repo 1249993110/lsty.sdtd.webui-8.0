@@ -1,6 +1,6 @@
 import InventoryDialog from './InventoryDialog.vue';
 import { createVNode, render } from 'vue';
-import { getPlayerInventory } from '@/api/entity-management';
+import { getPlayerInventory } from '~/api/entity-management';
 
 export const showInventory = async (entityId, playerName) => {
     const data = await getPlayerInventory(entityId);

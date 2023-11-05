@@ -25,7 +25,6 @@
 
 <script setup>
 import InventoryItem from './InventoryItem.vue';
-import { ElDialog } from 'element-plus';
 
 const props = defineProps({
     title: {

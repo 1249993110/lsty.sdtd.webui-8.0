@@ -34,8 +34,7 @@ export default {
 </script>
 
 <script setup>
-import { getItemBlocks } from '@/api/server-management';
-import { ElMessage, ElLoading } from 'element-plus';
+import { getItemBlocks } from '~/api/server-management';
 
 const items = reactive([]);
 const itemsChecked = ref(true);

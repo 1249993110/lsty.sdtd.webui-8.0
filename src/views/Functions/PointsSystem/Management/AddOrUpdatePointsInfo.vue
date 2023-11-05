@@ -24,8 +24,7 @@
 </template>
 
 <script setup>
-import { ElMessage, ElLoading } from 'element-plus';
-import * as api from '@/api/points-info';
+import * as api from '~/api/points-info';
 
 const isAdd = ref(false);
 const visible = ref(false);

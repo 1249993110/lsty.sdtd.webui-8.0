@@ -1,6 +1,5 @@
 import axios from 'axios';
 import nProgress from '../plugins/nprogress';
-import { ElMessage } from 'element-plus';
 import qs from 'qs';
 import { useUserInfoStore } from '../store/user-info';
 
@@ -50,6 +49,7 @@ service.interceptors.response.use(
                 break;
             case 400:
                 ElMessage.error(error.response.data.title ?? error.response.data ?? 'Bad Request');
+                console.error(error.response.data);
                 break;
             case 500:
                 ElMessage.error(error.response.data.message ?? 'Internal Server Error');

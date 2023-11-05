@@ -1,6 +1,6 @@
 <template>
-    <div class="sidebar">
-        <el-menu class="menu" :default-active="defaultMenu" @select="handleSelectMenu" unique-opened :collapse="sidebarStore.isCollapse">
+    <div class="sidebar" ref="sidebarRef">
+        <el-menu class="menu" :default-active="defaultMenu" @select="handleSelectMenu" :collapse="sidebarStore.isCollapse">
             <MenuTree :items="menusStore.tree" />
         </el-menu>
     </div>
@@ -8,10 +8,12 @@
 
 <script setup>
 import MenuTree from './MenuTree.vue';
-import { useMenusStore } from '@/store/menus';
-import { useTabsStore } from '@/store/tabs';
-import { useSidebarStore } from '@/store/sidebar';
+import { useMenusStore } from '~/store/menus';
+import { useTabsStore } from '~/store/tabs';
+import { useSidebarStore } from '~/store/sidebar';
+import { OverlayScrollbars } from 'overlayscrollbars';
 
+const sidebarRef = ref();
 const route = useRoute();
 const menusStore = useMenusStore();
 const tabsStore = useTabsStore();
@@ -28,6 +30,19 @@ const handleSelectMenu = (path) => {
         tabsStore.add(path);
     }
 };
+
+onMounted( () => {
+    OverlayScrollbars(sidebarRef.value, {
+        overflow: {
+            x: 'hidden',
+            y: 'scroll',
+        },
+        scrollbars:{
+            theme: 'os-theme-light'
+        }
+    });
+});
+
 </script>
 
 <style scoped lang="scss">
@@ -40,9 +55,9 @@ const handleSelectMenu = (path) => {
             width: 200px;
         }
 
-        --el-menu-bg-color: #001529;
+        --el-menu-bg-color: #001529af;
         --el-menu-text-color: #ffffffb3;
-        --el-menu-hover-bg-color: darkslategray;
+        --el-menu-hover-bg-color: #2e4d4daf;
         --el-menu-active-color: #fff;
 
         :deep(.el-sub-menu),
@@ -52,12 +67,12 @@ const handleSelectMenu = (path) => {
             }
 
             .el-menu--inline {
-                background-color: #0c2135;
+                background-color: #0c2135af;
             }
         }
 
         :deep(.el-menu-item.is-active) {
-            background-color: #0960bd;
+            background-color: #0960bdaf;
         }
 
         &.el-menu--collapse {

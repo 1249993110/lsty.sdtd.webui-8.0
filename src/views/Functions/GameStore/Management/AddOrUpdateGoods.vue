@@ -27,8 +27,7 @@
 </template>
 
 <script setup>
-import { ElMessage, ElLoading } from 'element-plus';
-import * as api from '@/api/goods.js';
+import * as api from '~/api/goods.js';
 
 const isAdd = ref(false);
 const visible = ref(false);

@@ -15,8 +15,8 @@ export default {
 </script>
 
 <script setup>
-import { executeConsoleCommand } from '@/api/server-management';
-import { emitter, eventTypes } from '@/utils/event-hub';
+import { executeConsoleCommand } from '~/api/server-management';
+import { emitter, eventTypes } from '~/utils/event-hub';
 
 let contentCount = 0;
 const contentMaxCount = 1000;

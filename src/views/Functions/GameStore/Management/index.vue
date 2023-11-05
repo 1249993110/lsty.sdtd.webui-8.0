@@ -32,9 +32,9 @@ export default {
 </script>
 
 <script setup>
-import * as api from '@/api/goods.js';
+import * as api from '~/api/goods.js';
 import { Edit, Plus, Delete } from '@element-plus/icons-vue';
-import myconfirm from '@/utils/myconfirm';
+import myconfirm from '~/utils/myconfirm';
 import AddOrUpdateGoods from './AddOrUpdateGoods.vue';
 
 const tableData = ref([]);

@@ -1,5 +1,5 @@
 <template>
-    <el-tabs closable v-model="activeName" type="card" @tab-remove="handleTabRemove">
+    <el-tabs class="main" closable v-model="activeName" type="card" @tab-remove="handleTabRemove">
         <el-tab-pane v-for="item in activeMenus" :key="item.path" :name="item.path">
             <template #label>
                 <Icon class="icon" :name="item.icon" />
@@ -31,11 +31,15 @@ const activeMenus = computed(() => {
 });
 </script>
 
-<style scoped>
-.icon {
-    margin-right: 6px;
-}
-:deep(.el-tabs__nav .el-tabs__item:nth-child(1) i) {
-    display: none;
+<style scoped lang="scss">
+.main {
+    --el-tabs-header-height: 35px;
+
+    .icon {
+        margin-right: 6px;
+    }
+    :deep(.el-tabs__nav .el-tabs__item:nth-child(1) i) {
+        display: none;
+    }
 }
 </style>

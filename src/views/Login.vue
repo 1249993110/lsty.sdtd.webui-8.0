@@ -28,11 +28,10 @@
 </template>
 
 <script setup>
-import { ElMessage as message } from 'element-plus';
 import { User, Lock } from '@element-plus/icons-vue';
 import { login } from '../api/account';
 import { useUserInfoStore } from '../store/user-info';
-import { disposeAllStores } from '@/plugins/pinia';
+import { disposeAllStores } from '~/plugins/pinia';
 
 const title = import.meta.env.VITE_APP_TITEL;
 
@@ -63,9 +62,9 @@ const submitForm = async () => {
             userInfoStore.saveToken(formModel.accessToken);
             router.push(route.query.redirectPath ?? '/');
             
-            message.success('登录成功');
+            ElMessage.success('登录成功');
         } catch (error) {
-            message.error('登录失败');
+            ElMessage.error('登录失败');
             console.error(error);
         }
     } catch {}
