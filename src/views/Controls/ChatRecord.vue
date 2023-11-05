@@ -80,6 +80,7 @@ const format_chatType = (row) => {
         case 3:
             type = '私聊';
             break;
+        // unknown
         default:
             type = '未知';
     }
