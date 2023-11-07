@@ -1,48 +1,43 @@
 <template>
-    <div class="history-players">
-        <div class="search-container">
-            <el-input class="input" v-model="queryParams.keyword" placeholder="请输入玩家Id或名称" clearable @keyup.enter.native="getData"></el-input>
-            <el-button class="button" type="primary" @click="getData">
-                <template #icon><Icon name="search" /></template>
-                查 询
-            </el-button>
-        </div>
-        <div class="table-container">
-            <el-table :data="tableData" border stripe height="100%" highlight-current-row ref="tableRef" @row-contextmenu="onContextmenu">
-                <el-table-column type="index" label="序号" width="60"> </el-table-column>
-                <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
-                <el-table-column prop="name" label="玩家昵称" width="115" sortable> </el-table-column>
-                <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
-                <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column>
-                <el-table-column prop="lastOnline" label="上次在线" width="165" sortable> </el-table-column>
-                <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
-                <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
-                <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
-                <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
-                <el-table-column prop="killedZombies" label="击杀僵尸" width="105" sortable> </el-table-column>
-                <el-table-column prop="killedPlayers" label="击杀玩家" width="105" sortable> </el-table-column>
-                <el-table-column prop="deaths" label="死亡次数" width="105" sortable> </el-table-column>
-                <el-table-column prop="expToNextLevel" label="升级所需经验" width="110"> </el-table-column>
-                <el-table-column prop="ip" label="IP地址" width="135" sortable> </el-table-column>
-                <el-table-column prop="ipAttribution" label="IP归属地" width="135" sortable> </el-table-column>
-                <el-table-column prop="landProtectionActive" label="领地石保护状态" width="165" :formatter="format_landProtectionActive"> </el-table-column>
-                <el-table-column prop="landProtectionMultiplier" label="领地石保护倍数" width="165"> </el-table-column>
-                <el-table-column prop="crossplatformId" label="跨平台Id" width="215" sortable> </el-table-column>
-            </el-table>
-        </div>
-        <el-pagination
-            style="margin-top: 8px"
-            background
-            @size-change="getData"
-            @current-change="getData"
-            :page-sizes="[5, 10, 20, 50, 100]"
-            v-model:current-page="queryParams.pageNumber"
-            v-model:page-size="queryParams.pageSize"
-            :total="total"
-            layout="total, sizes, prev, pager, next, jumper"
-        >
-        </el-pagination>
-    </div>
+    <MyTableEx
+        @on-export="handleExport"
+        @on-contextmenu="handleContextmenu"
+        :search-form-model="searchFormModel"
+        :get-data="getData"
+        :table-data="tableData"
+        :total="total"
+        :show-add-btn="false"
+        :show-edit-btn="false"
+        :operation-column-width="90"
+        :delete="deleteRequest"
+        :batch-delete="batchDeleteRequest"
+    >
+        <template #searchFormItems>
+            <el-form-item label="关键词" prop="keyword">
+                <el-input v-model="searchFormModel.keyword" style="width: 400px" placeholder="请输入玩家Id或名称" clearable autofocus></el-input>
+            </el-form-item>
+        </template>
+        <template #columns>
+            <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
+            <el-table-column prop="name" label="玩家昵称" width="120" sortable> </el-table-column>
+            <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
+            <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column>
+            <el-table-column prop="lastOnline" label="上次在线" width="165" sortable> </el-table-column>
+            <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
+            <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
+            <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
+            <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
+            <el-table-column prop="killedZombies" label="击杀僵尸" width="105" sortable> </el-table-column>
+            <el-table-column prop="killedPlayers" label="击杀玩家" width="105" sortable> </el-table-column>
+            <el-table-column prop="deaths" label="死亡次数" width="105" sortable> </el-table-column>
+            <el-table-column prop="expToNextLevel" label="升级所需经验" width="110"> </el-table-column>
+            <el-table-column prop="ip" label="IP地址" width="135" sortable> </el-table-column>
+            <el-table-column prop="ipAttribution" label="IP归属地" width="135" sortable> </el-table-column>
+            <el-table-column prop="landProtectionActive" label="领地石保护状态" width="125" :formatter="format_landProtectionActive"> </el-table-column>
+            <el-table-column prop="landProtectionMultiplier" label="领地石保护倍数" width="125"> </el-table-column>
+            <el-table-column prop="crossplatformId" label="跨平台Id" width="320" sortable> </el-table-column>
+        </template>
+    </MyTableEx>
 </template>
 
 <script>
@@ -54,51 +49,41 @@ export default {
 <script setup>
 import ContextMenu from '@imengyu/vue3-context-menu';
 import * as sdtdConsole from '~/api/sdtd-console';
-import { getHistoryPlayers } from '~/api/entity-management';
-import { showInventory } from '~/components/Inventory/index.js';
+import { getHistoryPlayers, deleteHistoryPlayers } from '~/api/entity-management';
+import { showInventory } from '~/components/InventoryDialog/index.js';
 import myprompt from '~/utils/myprompt';
 import myconfirm from '~/utils/myconfirm';
 import axios from 'axios';
+import * as fileHelper from '~/utils/file-helper';
+
+const searchFormModel = reactive({
+    keyword: '',
+});
 
 const tableData = ref([]);
-
-const queryParams = reactive({
-    pageNumber: 1,
-    pageSize: 10,
-    keyword: '',
-    order: '',
-    desc: true,
-});
 const total = ref(0);
 
-const getData = () => {
-    getHistoryPlayers(queryParams).then((data) => {
-        tableData.value = data.items;
-        total.value = data.total;
-        data = data.items;
-        if (data.length) {
-            axios
-                .post(
-                    'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
-                    data.map((i) => i.ip)
-                )
-                .then((response) => {
-                    const data = response.data;
-                    for (let i = 0; i < data.length; i++) {
-                        const element = data[i];
-                        tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-    });
+const getData = async (pagination) => {
+    const data = await getHistoryPlayers({ ...pagination, ...searchFormModel });
+    tableData.value = data.items;
+    total.value = data.total;
+    const items = data.items;
+    if (items.length) {
+        axios
+            .post(
+                'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
+                items.map((i) => i.ip)
+            )
+            .then((response) => {
+                const data = response.data;
+                for (let i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
+                }
+            });
+    }
 };
 
-getData();
-
-const tableRef = ref();
 const { copy } = useClipboard();
 
 const formatMinute = (totalMinute) => {
@@ -137,10 +122,7 @@ const format_landProtectionActive = (row) => {
     const value = row.landProtectionActive;
     return value ? '激活' : '未激活';
 };
-const onContextmenu = (row, column, event) => {
-    event.preventDefault();
-    tableRef.value.setCurrentRow(row);
-
+const handleContextmenu = (row, column, event) => {
     const entityId = row.entityId;
     const playerName = row.name;
 
@@ -217,23 +199,42 @@ const onContextmenu = (row, column, event) => {
         ],
     });
 };
-</script>
 
-<style scoped lang="scss">
-.history-players {
-    height: 100%;
-    .search-container {
-        display: flex;
-        .input {
-            width: 400px;
-        }
-        .button {
-            margin-left: 8px;
-        }
+const handleExport = (command) => {
+    switch (command) {
+        case 'csv':
+            fileHelper.exportCsv(tableData.value, '历史玩家', {
+                entityId: '实体Id',
+                name: '玩家昵称',
+                platformId: '平台Id',
+                platformType: '平台类型',
+                lastOnline: '上次在线',
+                totalTimePlayed: '总游戏时长',
+                level: '等级',
+                score: '评分',
+                position: '玩家坐标',
+                killedZombies: '击杀僵尸',
+                killedPlayers: '击杀玩家',
+                deaths: '死亡次数',
+                expToNextLevel: '升级所需经验',
+                ip: 'IP地址',
+                ipAttribution: 'IP归属地',
+                landProtectionActive: '领地石保护状态',
+                landProtectionMultiplier: '领地石保护倍数',
+                crossplatformId: '跨平台Id',
+            });
+            break;
+        case 'json':
+            fileHelper.exportJson(tableData.value, '历史玩家');
+            break;
     }
-    .table-container {
-        height: calc(100% - 84px);
-        margin-top: 8px;
-    }
-}
-</style>
+};
+
+const deleteRequest = async (row) => {
+    return await deleteHistoryPlayers([row.entityId]);
+};
+
+const batchDeleteRequest = async (rows) => {
+    return await deleteHistoryPlayers(rows.map((i) => i.entityId));
+};
+</script>

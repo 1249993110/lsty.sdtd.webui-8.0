@@ -1,37 +1,31 @@
 <template>
-    <div class="history-players">
-        <div class="search-container">
-            <el-input class="input" v-model="queryParams.keyword" placeholder clearable @keyup.enter.native="getData"></el-input>
-            <el-button class="button" type="primary" @click="getData">
-                <template #icon><Icon name="search" /></template>
-                查 询
-            </el-button>
-        </div>
-        <div class="table-container">
-            <el-table :data="tableData" border height="100%" highlight-current-row ref="tableRef">
-                <el-table-column type="index" label="序号" width="60"> </el-table-column>
-                <el-table-column prop="createdDate" label="日期" width="165" sortable> </el-table-column>
-                <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
-                <el-table-column prop="senderName" label="发送者昵称" width="180" sortable> </el-table-column>
-                <el-table-column prop="chatType" label="类型" width="80" sortable :formatter="format_chatType"> </el-table-column>
-                <el-table-column prop="message" label="消息内容" sortable> </el-table-column>
-                <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
-                <el-table-column prop="crossplatformId" label="跨平台Id" width="215" sortable> </el-table-column>
-            </el-table>
-        </div>
-        <el-pagination
-            style="margin-top: 8px"
-            background
-            @size-change="getData"
-            @current-change="getData"
-            :page-sizes="[5, 10, 20, 50, 100]"
-            v-model:current-page="queryParams.pageNumber"
-            v-model:page-size="queryParams.pageSize"
-            :total="total"
-            layout="total, sizes, prev, pager, next, jumper"
-        >
-        </el-pagination>
-    </div>
+    <MyTableEx
+        @on-export="handleExport"
+        :search-form-model="searchFormModel"
+        :get-data="getData"
+        :table-data="tableData"
+        :total="total"
+        :show-add-btn="false"
+        :show-edit-btn="false"
+        :operation-column-width="90"
+        :delete="deleteRequest"
+        :batch-delete="batchDeleteRequest"
+    >
+        <template #searchFormItems>
+            <el-form-item label="关键词" prop="keyword">
+                <el-input v-model="searchFormModel.keyword" style="width: 400px" placeholder="请输入内容" clearable autofocus></el-input>
+            </el-form-item>
+        </template>
+        <template #columns>
+            <el-table-column prop="createdDate" label="日期" width="165" sortable> </el-table-column>
+            <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
+            <el-table-column prop="senderName" label="发送者名称" width="180" sortable> </el-table-column>
+            <el-table-column prop="chatType" label="类型" width="80" sortable :formatter="format_chatType"> </el-table-column>
+            <el-table-column prop="message" label="消息内容" min-width="120" sortable> </el-table-column>
+            <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
+            <el-table-column prop="crossplatformId" label="跨平台Id" width="215" sortable> </el-table-column>
+        </template>
+    </MyTableEx>
 </template>
 <script>
 export default {
@@ -39,27 +33,21 @@ export default {
 };
 </script>
 <script setup>
-import { getChatRecord } from '~/api/chat-record';
+import * as api from '~/api/chat-record';
+import * as fileHelper from '~/utils/file-helper';
 
-const tableData = ref([]);
-const queryParams = reactive({
-    pageNumber: 1,
-    pageSize: 20,
-    desc: true,
+const searchFormModel = reactive({
     keyword: '',
 });
+
+const tableData = ref([]);
 const total = ref(0);
 
-const getData = () => {
-    getChatRecord(queryParams).then((data) => {
-        tableData.value = data.items;
-        total.value = data.total;
-    });
+const getData = async (pagination) => {
+    const data = await api.getChatRecord({ ...pagination, ...searchFormModel });
+    tableData.value = data.items;
+    total.value = data.total;
 };
-
-getData();
-
-const tableRef = ref();
 
 const format_chatType = (row) => {
     let type;
@@ -86,23 +74,31 @@ const format_chatType = (row) => {
     }
     return type;
 };
-</script>
 
-<style scoped lang="scss">
-.history-players {
-    height: 100%;
-    .search-container {
-        display: flex;
-        .input {
-            width: 400px;
-        }
-        .button {
-            margin-left: 8px;
-        }
+const handleExport = (command) => {
+    switch (command) {
+        case 'csv':
+            fileHelper.exportCsv(tableData.value, '聊天记录', {
+                createdDate: '日期',
+                entityId: '实体Id',
+                senderName: '发送者名称',
+                chatType: '类型',
+                message: '消息内容',
+                platformId: '平台Id',
+                crossplatformId: '跨平台Id',
+            });
+            break;
+        case 'json':
+            fileHelper.exportJson(tableData.value, '聊天记录');
+            break;
     }
-    .table-container {
-        margin-top: 8px;
-        height: calc(100% - 84px);
-    }
-}
-</style>
+};
+
+const deleteRequest = async (row) => {
+    return await api.deleteChatRecordById([row.id]);
+};
+
+const batchDeleteRequest = async (rows) => {
+    return await api.deleteChatRecordByIds(rows.map((i) => i.id));
+};
+</script>

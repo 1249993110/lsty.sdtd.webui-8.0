@@ -1,31 +1,29 @@
 <template>
-    <div>
-        <MyTableEx
-            :searchFormModel="searchFormModel"
-            :getData="getData"
-            :tableData="tableData"
-            :total="total"
-            :addOrUpdateComponent="AddBlacklist"
-            :delete="deleteRequest"
-            :batchDelete="batchDeleteRequest"
-            @onExport="handleExport"
-        >
-            <template #searchFormItems>
-                <el-form-item label="玩家Id" prop="playerId">
-                    <el-input placeholder="请输入内容" clearable v-model="searchFormModel.playerId" style="width: 340px" autofocus></el-input>
-                </el-form-item>
-                <el-form-item label="名称" prop="displayName">
-                    <el-input placeholder="请输入内容" clearable v-model="searchFormModel.displayName"></el-input>
-                </el-form-item>
-            </template>
-            <template #columns>
-                <el-table-column prop="playerId" label="玩家Id" width="320" sortable />
-                <el-table-column prop="displayName" label="名称" width="150" sortable />
-                <el-table-column prop="bannedUntil" label="解封日期" width="170" sortable :formatter="(row) => row.bannedUntil.substr(0, 16)" />
-                <el-table-column prop="reason" label="封禁原因" min-width="170" />
-            </template>
-        </MyTableEx>
-    </div>
+    <MyTableEx
+        @on-export="handleExport"
+        :search-form-model="searchFormModel"
+        :get-data="getData"
+        :table-data="tableData"
+        :total="total"
+        :add-or-update-component="AddBlacklist"
+        :delete="deleteRequest"
+        :batch-delete="batchDeleteRequest"
+    >
+        <template #searchFormItems>
+            <el-form-item label="玩家Id" prop="playerId">
+                <el-input v-model="searchFormModel.playerId" style="width: 340px" placeholder="请输入内容" clearable autofocus></el-input>
+            </el-form-item>
+            <el-form-item label="名称" prop="displayName">
+                <el-input v-model="searchFormModel.displayName" placeholder="请输入内容" clearable></el-input>
+            </el-form-item>
+        </template>
+        <template #columns>
+            <el-table-column prop="playerId" label="玩家Id" width="320" sortable />
+            <el-table-column prop="displayName" label="名称" width="150" sortable />
+            <el-table-column prop="bannedUntil" label="解封日期" width="170" sortable :formatter="(row) => row.bannedUntil.substr(0, 16)" />
+            <el-table-column prop="reason" label="封禁原因" min-width="170" />
+        </template>
+    </MyTableEx>
 </template>
 
 <script>
@@ -72,7 +70,7 @@ const batchDeleteRequest = async (rows) => {
     return await api.deteleBlacklist(rows.map((i) => i.playerId));
 };
 
-const handleExport = (command)=>{
+const handleExport = (command) => {
     switch (command) {
         case 'csv':
             fileHelper.exportCsv(tableData.value, '黑名单', { playerId: '玩家Id', displayName: '名称', bannedUntil: '解封日期', reason: '封禁原因' });
@@ -81,6 +79,5 @@ const handleExport = (command)=>{
             fileHelper.exportJson(tableData.value, '黑名单');
             break;
     }
-}
+};
 </script>
-

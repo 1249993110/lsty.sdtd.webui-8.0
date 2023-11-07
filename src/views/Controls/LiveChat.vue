@@ -40,7 +40,7 @@ onDeactivated(() => {
     isActivated = false;
 });
 
-const appendMessage = (chatMessage) => {console.log(chatMessage);
+const appendMessage = (chatMessage) => {
     const message = moment().format("YYYY-MM-DD HH:mm:ss   '") + chatMessage.senderName + "': " + chatMessage.message;
 
     const element = document.getElementById('live-chat-content');
@@ -99,7 +99,6 @@ emitter.on(eventTypes.OnChatMessage, (chatMessage) => {
 .live-chat {
     height: 100%;
     #live-chat-content {
-        background-color: white;
         height: calc(100% - 60px);
         overflow: auto;
         border: 1px solid rgb(24, 173, 121);

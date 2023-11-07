@@ -1,15 +1,11 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 export const useAppSettingsStore = defineStore('app-settings', {
     state: () => {
         return {
-            tableSize: 'small'
-        }
+            tableSize: 'small',
+        };
     },
-    getters: {
-        
-    },
-    actions: {
-        
-    }
-})
+    getters: {},
+    actions: {},
+});

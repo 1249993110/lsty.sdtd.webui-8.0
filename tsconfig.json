@@ -1,12 +1,18 @@
 {
     "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
         "allowJs": true,
         "types": ["vite/client", "element-plus/global"],
         "outDir": "./dist",
         "paths": {
             "~/*": ["./src/*"]
-        }
+        },
+        "lib": ["esnext", "dom"],
+        // "resolveJsonModule": true,
+        // "esModuleInterop": true,
     },
     "include": ["./src/**/*.vue"],
-    "files": ["./src/components/shims-vue.d.ts", "./auto-imports.d.ts", "./components.d.ts"],
+    "files": ["./src/components/shims-vue.d.ts", "./auto-imports.d.ts", "./components.d.ts"]
 }

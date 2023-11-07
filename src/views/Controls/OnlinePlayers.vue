@@ -1,26 +1,28 @@
 <template>
     <div class="online-players">
-        <el-table :data="tableData" border stripe height="100%" highlight-current-row ref="tableRef" @row-contextmenu="onContextmenu">
-            <el-table-column type="index" label="序号" width="60"> </el-table-column>
-            <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
-            <el-table-column prop="name" label="玩家昵称" width="115" sortable> </el-table-column>
-            <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
-            <!-- <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column> -->
-            <el-table-column prop="currentLife" label="存活时长" width="110" :formatter="format_currentLife" sortable> </el-table-column>
-            <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
-            <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
-            <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
-            <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
-            <el-table-column prop="killedZombies" label="击杀僵尸" width="105" sortable> </el-table-column>
-            <el-table-column prop="killedPlayers" label="击杀玩家" width="105" sortable> </el-table-column>
-            <el-table-column prop="deaths" label="死亡次数" width="105" sortable> </el-table-column>
-            <el-table-column prop="expToNextLevel" label="升级所需经验" width="110"> </el-table-column>
-            <el-table-column prop="ip" label="IP地址" width="135" sortable> </el-table-column>
-            <el-table-column prop="ipAttribution" label="IP归属地" width="135" sortable> </el-table-column>
-            <el-table-column prop="ping" label="延迟" width="60"> </el-table-column>
-            <el-table-column prop="landProtectionActive" label="领地石保护状态" width="165" :formatter="format_landProtectionActive"> </el-table-column>
-            <el-table-column prop="landProtectionMultiplier" label="领地石保护倍数" width="165"> </el-table-column>
-        </el-table>
+        <el-card class="table-card" shadow="always" v-loading="loading">
+            <el-table ref="tableRef" :data="tableData" stripe height="100%" highlight-current-row @row-contextmenu="onContextmenu">
+                <el-table-column type="index" label="序号" width="60"> </el-table-column>
+                <el-table-column prop="entityId" label="实体Id" width="95" sortable> </el-table-column>
+                <el-table-column prop="name" label="玩家昵称" width="115" sortable> </el-table-column>
+                <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
+                <!-- <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column> -->
+                <el-table-column prop="currentLife" label="存活时长" width="110" :formatter="format_currentLife" sortable> </el-table-column>
+                <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
+                <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
+                <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
+                <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
+                <el-table-column prop="killedZombies" label="击杀僵尸" width="105" sortable> </el-table-column>
+                <el-table-column prop="killedPlayers" label="击杀玩家" width="105" sortable> </el-table-column>
+                <el-table-column prop="deaths" label="死亡次数" width="105" sortable> </el-table-column>
+                <el-table-column prop="expToNextLevel" label="升级所需经验" width="110"> </el-table-column>
+                <el-table-column prop="ip" label="IP地址" width="135" sortable> </el-table-column>
+                <el-table-column prop="ipAttribution" label="IP归属地" width="135" sortable> </el-table-column>
+                <el-table-column prop="ping" label="延迟" width="80" sortable> </el-table-column>
+                <el-table-column prop="landProtectionActive" label="领地石保护状态" width="125" :formatter="format_landProtectionActive"> </el-table-column>
+                <el-table-column prop="landProtectionMultiplier" label="领地石保护倍数" width="125"> </el-table-column>
+            </el-table>
+        </el-card>
     </div>
 </template>
 
@@ -34,34 +36,28 @@ export default {
 import ContextMenu from '@imengyu/vue3-context-menu';
 import * as sdtdConsole from '~/api/sdtd-console';
 import { getOnlinePlayers } from '~/api/entity-management';
-import { showInventory } from '~/components/Inventory/index.js';
+import { showInventory } from '~/components/InventoryDialog/index.js';
 import myprompt from '~/utils/myprompt';
 import myconfirm from '~/utils/myconfirm';
 import axios from 'axios';
 
+const loading = ref(false);
 const tableData = ref([]);
 
-const getData = () => {
-    getOnlinePlayers().then((data) => {
-        tableData.value = data;
-        if (data.length) {
-            axios
-                .post(
-                    'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
-                    data.map((i) => i.ip)
-                )
-                .then((response) => {
-                    const data = response.data;
-                    for (let i = 0; i < data.length; i++) {
-                        const element = data[i];
-                        tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+const getData = async () => {
+    let data = await getOnlinePlayers();
+    tableData.value = data;
+    if (data.length) {
+        const response = await axios.post(
+            'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
+            data.map((i) => i.ip)
+        );
+        data = response.data;
+        for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
         }
-    });
+    }
 };
 
 getData();
@@ -246,5 +242,16 @@ const format_landProtectionActive = (row) => {
 <style scoped lang="scss">
 .online-players {
     height: 100%;
+    .table-card {
+        height: 100%;
+        background-color: #ffffffaf;
+        :deep(.el-card__body) {
+            height: 100%;
+            padding: 0;
+        }
+        :deep(.el-table) {
+            background-color: transparent;
+        }
+    }
 }
 </style>

@@ -31,18 +31,17 @@ const handleSelectMenu = (path) => {
     }
 };
 
-onMounted( () => {
+onMounted(() => {
     OverlayScrollbars(sidebarRef.value, {
         overflow: {
             x: 'hidden',
             y: 'scroll',
         },
-        scrollbars:{
-            theme: 'os-theme-light'
-        }
+        scrollbars: {
+            theme: 'os-theme-light',
+        },
     });
 });
-
 </script>
 
 <style scoped lang="scss">

@@ -8,7 +8,14 @@
                 <Sidebar />
             </el-aside>
             <el-main>
-                <Main />
+                <el-tabs class="main" closable v-model="activeName" type="card" @tab-remove="handleTabRemove">
+                    <el-tab-pane v-for="item in activeMenus" :key="item.path" :name="item.path">
+                        <template #label>
+                            <Icon class="icon" :name="item.icon" />
+                            <span>{{ item.label }}</span>
+                        </template>
+                    </el-tab-pane>
+                </el-tabs>
                 <div class="router-view" v-if="tabsStore.isRouterAlive">
                     <router-view v-slot="{ Component }">
                         <transition mode="out-in">
@@ -26,13 +33,29 @@
 <script setup>
 import Sidebar from './Sidebar/index.vue';
 import Header from './Header.vue';
-import Main from './Main.vue';
 import { useSidebarStore } from '../store/sidebar';
 import { useTabsStore } from '../store/tabs';
+import { useMenusStore } from '../store/menus';
 
 const tabsStore = useTabsStore();
 const sidebarStore = useSidebarStore();
 const sidebarWidth = computed(() => (sidebarStore.isCollapse ? '64px' : '200px'));
+
+const route = useRoute();
+const router = useRouter();
+const activeName = computed({
+    get: () => route.path,
+    set: (path) => router.push(path),
+});
+
+const handleTabRemove = (path) => {
+    tabsStore.remove(path);
+};
+
+const menusStore = useMenusStore();
+const activeMenus = computed(() => {
+    return tabsStore.paths.map((i) => menusStore.getMenuByPath(i));
+});
 </script>
 
 <style scoped lang="scss">
@@ -48,10 +71,23 @@ const sidebarWidth = computed(() => (sidebarStore.isCollapse ? '64px' : '200px')
     .el-main {
         padding: 4px;
         background-color: #f0f2f5af;
+
+        .icon {
+            margin-right: 6px;
+        }
+        :deep(.el-tabs__nav .el-tabs__item:nth-child(1) i) {
+            visibility: hidden;
+        }
+
         :deep(.el-tabs) {
             .el-tabs__header {
+                --el-tabs-header-height: 35px;
                 margin: 0;
                 background-color: #ffffffaf;
+            }
+
+            .el-tabs__item.is-active {
+                border-bottom-color: mediumblue;
             }
         }
     }
@@ -75,76 +111,6 @@ const sidebarWidth = computed(() => (sidebarStore.isCollapse ? '64px' : '200px')
             & > div {
                 height: 100%;
             }
-            // --search-box-height: 80px;
-            // --search-box-bottom: 12px;
-            // :deep(.search-box) {
-            //     border-radius: 2px;
-            //     height: var(--search-box-height);
-            //     background-color: #fff;
-            //     display: flex;
-            //     flex-flow: row wrap;
-            //     align-content: space-evenly;
-            //     align-items: center;
-            //     margin-bottom: var(--search-box-bottom);
-
-            //     .keyword {
-            //         width: 300px;
-            //     }
-            //     .el-button {
-            //         width: 74px;
-            //     }
-
-            //     .el-input + .el-button {
-            //         margin-left: 24px;
-            //     }
-
-            //     .label {
-            //         font-size: 14px;
-            //         color: var(--el-text-color-regular);
-            //         margin-left: 24px;
-            //         margin-right: 6px;
-            //     }
-            // }
-
-            // :deep(.table-box) {
-            //     border-radius: 2px;
-            //     background-color: #fff;
-            //     height: calc(100% - var(--search-box-height) - var(--search-box-bottom));
-
-            //     --operation-height: 50px;
-            //     --footer-height: 50px;
-            //     --el-table-height: calc(100% - var(--operation-height) - var(--footer-height));
-
-            //     .operation {
-            //         padding-left: 16px;
-            //         height: var(--operation-height);
-            //         display: flex;
-            //         flex-flow: row;
-            //         align-items: center;
-            //         overflow: auto;
-
-            //         .el-button {
-            //             width: 74px;
-            //         }
-
-            //         .el-pagination {
-            //             box-sizing: border-box;
-            //         }
-
-            //         .el-radio-group {
-            //             margin-left: auto;
-            //             margin-right: 16px;
-            //             min-width: 168px;
-            //         }
-            //     }
-            // }
-
-            // :deep(.table-container) {
-            //     .el-table {
-            //         background-color: #ffffffaf;
-            //         //height: var(--el-table-height);
-            //     }
-            // }
         }
     }
 }

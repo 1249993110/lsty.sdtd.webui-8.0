@@ -10,7 +10,7 @@
             </el-form>
         </el-card>
         <el-card class="table-card" shadow="always" v-loading="loading">
-            <div class="toolbar" v-if="showToolbar">
+            <div class="toolbar">
                 <el-button v-if="showAddBtn" type="primary" :icon="Plus" @click="handleAdd">新 增</el-button>
                 <el-button v-if="showBatchDeleteBtn" type="danger" :icon="Delete" @click="handleBatchDelete" :disabled="batchDeleteDisabled">批量删除</el-button>
                 <div style="margin-left: auto">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="table">
-                <el-table height="100%" ref="tableRef" :data="tableData" highlight-current-row @selection-change="handleSelectionChange">
+                <el-table height="100%" ref="tableRef" :data="tableData" highlight-current-row stripe @selection-change="handleSelectionChange" @row-contextmenu="handleContextmenu">
                     <el-table-column v-if="showTableSelection" type="selection" width="50" align="center" />
                     <el-table-column v-if="showTableIndex" type="index" label="序号" width="60" />
                     <slot name="columns"></slot>
@@ -56,7 +56,13 @@
                 </el-pagination>
             </div>
         </el-card>
-        <component v-if="showAddBtn" :is="addOrUpdateComponent" :initData="initData" v-model="addOrUpdateComponentVisible" @onConfirm="handelAddOrUpdateConfirm"></component>
+        <component
+            v-if="showAddBtn"
+            :is="addOrUpdateComponent"
+            :initData="initData"
+            v-model="addOrUpdateComponentVisible"
+            @onConfirm="handelAddOrUpdateConfirm"
+        ></component>
     </div>
 </template>
 
@@ -212,7 +218,7 @@ const handelAddOrUpdateConfirm = async () => {
     await getData();
 };
 
-const emit = defineEmits(['onExport', 'onImport']);
+const emit = defineEmits(['onExport', 'onImport', 'onContextmenu']);
 const handleExportCommand = async (command) => {
     emit('onExport', command);
 };
@@ -222,6 +228,13 @@ const handleImport = () => {
 };
 
 const tableRef = ref();
+
+const handleContextmenu = (row, column, event)=>{
+    event.preventDefault();
+    tableRef.value.setCurrentRow(row);
+    emit('onContextmenu', row, column, event);
+}
+
 defineExpose({ tableRef });
 </script>
 

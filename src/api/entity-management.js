@@ -17,6 +17,14 @@ export const getHistoryPlayers = (params) => {
 };
 
 /**
+ * 删除历史玩家
+ * @returns
+ */
+export const deleteHistoryPlayers = (entityIds) => {
+    return http.delete('/EntityManagement/HistoryPlayers', { data: entityIds });
+};
+
+/**
  * 获取玩家背包
  * @returns
  */

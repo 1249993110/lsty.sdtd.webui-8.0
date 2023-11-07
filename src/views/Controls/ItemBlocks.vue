@@ -1,30 +1,34 @@
 <template>
-    <el-card class="item-blocks">
-        <div class="search-container">
-            <el-checkbox v-model="itemsChecked" label="物品" size="large" />
-            <el-checkbox v-model="blocksChecked" label="方块" size="large" />
-            <el-checkbox v-model="devItemsChecked" label="开发方块" size="large" />
-            <el-input class="input" v-model="queryParams.keyword" placeholder clearable @keyup.enter.native="search"></el-input>
-            <el-button class="button" type="primary" @click="search" size="large">
-                <template #icon><Icon name="search" /></template>
-                搜 索
-            </el-button>
-        </div>
-        <div class="items-container" v-infinite-scroll="load">
-            <el-tooltip placement="right-end" :show-after="500" v-for="item in items" :key="item.id">
-                <el-image class="image" :src="item.url" lazy />
-                <template #content>
-                    {{ item.isBlock ? '方块' : '物品' }} Id {{ item.id }}<br />
-                    名称 {{ item.itemName }}<br />
-                    本地化名称 {{ item.localizationName }}<br />
-                    图标 {{ item.itemIcon }}<br />
-                    图标颜色 {{ item.iconColor }}<br />
-                    最大堆叠数量 {{ item.maxStackAllowed }}<br />
-                </template>
-            </el-tooltip>
-            <el-empty :image-size="200" v-if="items.length === 0" style="width: 100%" />
-        </div>
-    </el-card>
+    <div class="item-blocks">
+        <el-card shadow="always">
+            <div class="search-container">
+                <el-checkbox v-model="itemsChecked" label="物品" />
+                <el-checkbox v-model="blocksChecked" label="方块" />
+                <el-checkbox v-model="devItemsChecked" label="开发方块" />
+                <el-input class="input" v-model="queryParams.keyword" placeholder clearable @keyup.enter.native="search"></el-input>
+                <el-button class="button" type="primary" @click="search">
+                    <template #icon><Icon name="search" /></template>
+                    搜 索
+                </el-button>
+            </div>
+            <div class="items-container">
+                <el-scrollbar v-infinite-scroll="load" always>
+                    <el-tooltip placement="right-end" :show-after="500" v-for="item in items" :key="item.id">
+                        <el-image class="image" :src="item.url" lazy />
+                        <template #content>
+                            {{ item.isBlock ? '方块' : '物品' }} Id {{ item.id }}<br />
+                            名称 {{ item.itemName }}<br />
+                            本地化名称 {{ item.localizationName }}<br />
+                            图标 {{ item.itemIcon }}<br />
+                            图标颜色 {{ item.iconColor }}<br />
+                            最大堆叠数量 {{ item.maxStackAllowed }}<br />
+                        </template>
+                    </el-tooltip>
+                    <el-empty :image-size="200" v-if="items.length === 0" style="width: 100%" />
+                </el-scrollbar>
+            </div>
+        </el-card>
+    </div>
 </template>
 
 <script>
@@ -109,16 +113,19 @@ watch([itemsChecked, blocksChecked, devItemsChecked], search);
 
 const load = () => {
     queryParams.pageNumber += 1;
-    getData();
+    if (queryParams.pageNumber < 10) getData();
 };
 </script>
 
 <style scoped lang="scss">
 .item-blocks {
     height: 100%;
-
-    :deep(.el-card__body) {
+    .el-card {
+        background-color: #ffffffaf;
         height: 100%;
+        :deep(.el-card__body) {
+            height: calc(100% - 40px);
+        }
     }
 
     .search-container {
@@ -134,11 +141,14 @@ const load = () => {
     }
 
     .items-container {
-        overflow: auto;
         height: calc(100% - 48px);
         margin-top: 8px;
-        display: flex;
-        flex-wrap: wrap;
+        overflow: hidden;
+        :deep(.el-scrollbar__view) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
         .image {
             margin: 1px;
             display: block;

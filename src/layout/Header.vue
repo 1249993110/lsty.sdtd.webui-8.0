@@ -141,7 +141,9 @@ onKeyStroke('F11', (e) => {
         align-items: center;
 
         .separator {
-            color: floralwhite;
+            :deep(.el-breadcrumb__inner) {
+                color: lightsteelblue;
+            }
         }
     }
 

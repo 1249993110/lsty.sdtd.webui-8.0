@@ -92,3 +92,11 @@ export const addBlacklist = (data) => {
 export const deteleBlacklist = (data) => {
     return http.delete('/ServerManagement/Blacklist', { data: data });
 };
+
+/**
+ * 获取本地化字典
+ * @returns
+ */
+export const getLocalization = (language) => {
+    return http.get('/ServerManagement/Localization', { params: { language: language } });
+};
