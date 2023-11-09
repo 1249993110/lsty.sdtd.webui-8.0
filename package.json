@@ -12,7 +12,7 @@
     "@imengyu/vue3-context-menu": "^1.3.3",
     "@microsoft/signalr": "^7.0.12",
     "@vueuse/core": "^10.5.0",
-    "axios": "^1.6.0",
+    "axios": "^1.6.1",
     "element-plus": "^2.4.2",
     "mitt": "^3.0.1",
     "moment": "^2.29.4",
@@ -28,7 +28,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^4.4.1",
     "sass": "^1.69.5",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
