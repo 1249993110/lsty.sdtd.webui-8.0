@@ -44,11 +44,11 @@ const tree = [
                 label: '黑名单',
                 icon: 'list',
             },
-            {
-                path: 'whitelist',
-                label: '白名单',
-                icon: 'list',
-            },
+            // {
+            //     path: 'whitelist',
+            //     label: '白名单',
+            //     icon: 'list',
+            // },
             {
                 path: 'item-blocks',
                 label: '物品方块',

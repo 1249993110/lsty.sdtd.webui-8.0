@@ -7,8 +7,8 @@
                 <el-table-column prop="name" label="玩家昵称" width="115" sortable> </el-table-column>
                 <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
                 <!-- <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column> -->
-                <el-table-column prop="currentLife" label="存活时长" width="110" :formatter="format_currentLife" sortable> </el-table-column>
-                <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
+                <el-table-column prop="currentLife" label="存活时长" width="120" :formatter="format_currentLife" sortable> </el-table-column>
+                <el-table-column prop="totalTimePlayed" label="总游戏时长" width="150" :formatter="format_totalTimePlayed" sortable> </el-table-column>
                 <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
                 <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
                 <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>
@@ -45,24 +45,31 @@ const loading = ref(false);
 const tableData = ref([]);
 
 const getData = async () => {
-    let data = await getOnlinePlayers();
-    tableData.value = data;
-    if (data.length) {
-        const response = await axios.post(
-            'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
-            data.map((i) => i.ip)
-        );
-        data = response.data;
-        for (let i = 0; i < data.length; i++) {
-            const element = data[i];
-            tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
+    loading.value = true;
+    try {
+        let data = await getOnlinePlayers();
+        tableData.value = data;
+        if (data.length) {
+            const response = await axios.post(
+                'http://ip-api.com/batch?lang=zh-CN&fields=status,country,regionName,city',
+                data.map((i) => i.ip)
+            );
+            data = response.data;
+            for (let i = 0; i < data.length; i++) {
+                const element = data[i];
+                tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
+            }
         }
+    } finally {
+        loading.value = false;
     }
 };
 
-getData();
+const { pause, resume, isActive } = useIntervalFn(getData, 10000);
 
-useIntervalFn(getData, 10000);
+onActivated(getData);
+onActivated(resume);
+onDeactivated(pause);
 
 const tableRef = ref();
 const { copy } = useClipboard();

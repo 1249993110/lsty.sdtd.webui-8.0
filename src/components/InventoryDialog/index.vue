@@ -5,20 +5,20 @@
                 <div class="bag">
                     <div>背包</div>
                     <el-scrollbar noresize always class="split" height="410px">
-                        <InventoryItem v-for="(item, index) in inventory.bag" :key="index" :item="item"></InventoryItem>
+                        <InventoryItem v-for="(item, index) in inventory.bag" :key="index" :item="item" :entity-id="entityId"></InventoryItem>
                     </el-scrollbar>
                 </div>
                 <div class="equipment">
                     <div>装备</div>
                     <el-scrollbar noresize always class="split" height="410px">
-                        <InventoryItem v-for="(item, index) in inventory.equipment" :key="index" :item="item"></InventoryItem>
+                        <InventoryItem v-for="(item, index) in inventory.equipment" :key="index" :item="item" :entity-id="entityId"></InventoryItem>
                     </el-scrollbar>
                 </div>
             </div>
             <div style="width: 820px">
                 <div>腰带</div>
                 <div class="belt">
-                    <InventoryItem v-for="(item, index) in inventory.belt" :key="index" :item="item"></InventoryItem>
+                    <InventoryItem v-for="(item, index) in inventory.belt" :key="index" :item="item" :entity-id="entityId"></InventoryItem>
                 </div>
             </div>
         </div>

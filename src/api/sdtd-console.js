@@ -45,3 +45,11 @@ export const banPlayer = function (playerIdOrName, duration, durationUnit, reaso
 export const addAdmin = function (playerIdOrName, level, displayName) {
     return sendConsoleCommand(`admin add ${playerIdOrName} ${level} ${displayName}`);
 };
+
+/**
+ * 移除玩家物品
+ * @returns
+ */
+export const deletePlayerItems = (playerIdOrName, itemName) => {
+    return sendConsoleCommand(`ty-rpi ${playerIdOrName} ${itemName}`);
+};

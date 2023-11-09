@@ -7,8 +7,6 @@ import * as signalr from './utils/signalr';
 import { useUserInfoStore } from './store/user-info';
 import { useGameLocalizationStore } from './store/game-localization';
 
-useGameLocalizationStore();
-
 const userInfoStore = useUserInfoStore();
 const isLoggedIn = computed(() => userInfoStore.isLoggedIn);
 watch(
@@ -16,6 +14,7 @@ watch(
     (val) => {
         if (val) {
             signalr.start();
+            useGameLocalizationStore();
         } else {
             signalr.stop();
         }
@@ -24,5 +23,4 @@ watch(
         immediate: true,
     }
 );
-
 </script>

@@ -11,10 +11,15 @@ import ContextMenu from '@imengyu/vue3-context-menu';
 import { useZIndex } from 'element-plus';
 import { showTooltip, closeTooltip } from '~/components/SingletonTooltip/index.js';
 import { useGameLocalizationStore } from '~/store/game-localization';
+import * as sdtdConsole from '~/api/sdtd-console';
+import myconfirm from '~/utils/myconfirm';
 
 const props = defineProps({
     item: {
         type: Object,
+    },
+    entityId: {
+        type: Number,
     },
 });
 
@@ -62,6 +67,19 @@ const handleContextMenu = (event) => {
                 onClick: async () => {
                     await copy(item.iconColor);
                     ElMessage.success('复制成功');
+                },
+            },
+            {
+                label: '移除选中物品',
+                onClick: async () => {
+                    if (await myconfirm(`确定从玩家背包、腰带或装备中移除所有的'${gameLocalizationStore.dict[item.itemName]}'吗?`)) {
+                        const result = await sdtdConsole.deletePlayerItems(props.entityId, item.itemName);
+                        ElNotification({
+                            title: '命令执行结果',
+                            type: 'info',
+                            message: h('i', { style: 'color: teal' }, result[0]),
+                        });
+                    }
                 },
             },
         ],

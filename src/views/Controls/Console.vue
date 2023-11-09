@@ -77,7 +77,10 @@ const appendMessage = (message, logType) => {
     }
 
     const p = document.createElement('p');
-    p.innerHTML = `<font color="${color}">${message}</font>`;
+    const font = document.createElement('font');
+    font.setAttribute('color', color);
+    font.innerText = message;
+    p.appendChild(font);
 
     element.appendChild(p);
     p.scrollIntoView();
