@@ -1,8 +1,10 @@
 <template>
     <div class="sidebar" ref="sidebarRef">
-        <el-menu class="menu" :default-active="defaultMenu" @select="handleSelectMenu" :collapse="sidebarStore.isCollapse">
-            <MenuTree :items="menusStore.tree" />
-        </el-menu>
+        <el-scrollbar always :view-style="{ color: 'red' }">
+            <el-menu class="menu" :default-active="defaultMenu" @select="handleSelectMenu" :collapse="sidebarStore.isCollapse">
+                <MenuTree :items="menusStore.tree" />
+            </el-menu>
+        </el-scrollbar>
     </div>
 </template>
 
@@ -11,7 +13,6 @@ import MenuTree from './MenuTree.vue';
 import { useMenusStore } from '~/store/menus';
 import { useTabsStore } from '~/store/tabs';
 import { useSidebarStore } from '~/store/sidebar';
-import { OverlayScrollbars } from 'overlayscrollbars';
 
 const sidebarRef = ref();
 const route = useRoute();
@@ -30,25 +31,21 @@ const handleSelectMenu = (path) => {
         tabsStore.add(path);
     }
 };
-
-onMounted(() => {
-    OverlayScrollbars(sidebarRef.value, {
-        overflow: {
-            x: 'hidden',
-            y: 'scroll',
-        },
-        scrollbars: {
-            theme: 'os-theme-light',
-        },
-    });
-});
 </script>
 
 <style scoped lang="scss">
 .sidebar {
     height: 100%;
+    .el-scrollbar {
+        :deep(.el-scrollbar__bar.is-horizontal) {
+            height: 0 !important;
+        }
+        :deep(.el-scrollbar__thumb) {
+            background-color: aliceblue;
+        }
+    }
     .menu {
-        min-height: 100%;
+        min-height: calc(100vh - 48px);
         // 滑动特效关键代码
         &:not(.el-menu--collapse) {
             width: 200px;
