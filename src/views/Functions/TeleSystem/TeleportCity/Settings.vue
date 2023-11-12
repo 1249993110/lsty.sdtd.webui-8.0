@@ -1,44 +1,50 @@
 <template>
-    <el-card class="teleport-city-settings">
-        <el-form :model="formModel" :rules="rules" ref="formRef" label-width="150px" status-icon>
-            <el-form-item label="是否启用" prop="isEnabled">
-                <el-switch v-model="formModel.isEnabled" />
-            </el-form-item>
-            <el-form-item label="可用变量">
-                <el-tag v-for="(item, index) in variables" :key="index" class="tag">{{ '{' + item + '}' }}</el-tag>
-            </el-form-item>
-            <el-form-item label="查询列表命令" prop="queryListCmd" required>
-                <el-input v-model="formModel.queryListCmd" />
-            </el-form-item>
-            <el-form-item label="传送命令前缀" prop="teleCmdPrefix" required>
-                <el-input v-model="formModel.teleCmdPrefix" />
-            </el-form-item>
-            <el-form-item label="传送间隔, 单位: 秒" prop="teleInterval" required>
-                <el-input v-model="formModel.teleInterval" />
-            </el-form-item>
-            <el-form-item label="查询列表提示" prop="locationItemTip" required>
-                <el-input v-model="formModel.locationItemTip" />
-            </el-form-item>
-            <el-form-item label="传送成功提示" prop="teleSuccessTip" required>
-                <el-input v-model="formModel.teleSuccessTip" />
-            </el-form-item>
-            <el-form-item label="积分不足提示" prop="pointsNotEnoughTip" required>
-                <el-input v-model="formModel.pointsNotEnoughTip" />
-            </el-form-item>
-            <el-form-item label="正在冷却提示" prop="coolingTip" required> 
-                <el-input v-model="formModel.coolingTip" />
-            </el-form-item>
-            <el-form-item label="无城市信息提示" prop="noLocation" required>
-                <el-input v-model="formModel.noLocation" />
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="save">保存</el-button>
-            </el-form-item>
-        </el-form>
-        <div>
-            <el-text style="color: green">提示: 游戏内输入hc+空格+城市名称 进行传送</el-text>
-        </div>
-    </el-card>
+    <div class="teleport-city-settings">
+        <el-card>
+            <el-scrollbar always>
+                <div style="margin-right: 16px">
+                    <el-form :model="formModel" ref="formRef" label-width="150px" status-icon>
+                        <el-form-item label="是否启用" prop="isEnabled">
+                            <el-switch v-model="formModel.isEnabled" />
+                        </el-form-item>
+                        <el-form-item label="可用变量">
+                            <el-tag v-for="(item, index) in variables" :key="index" class="tag">{{ '{' + item + '}' }}</el-tag>
+                        </el-form-item>
+                        <el-form-item label="查询列表命令" prop="queryListCmd" required>
+                            <el-input v-model="formModel.queryListCmd" />
+                        </el-form-item>
+                        <el-form-item label="传送命令前缀" prop="teleCmdPrefix" required>
+                            <el-input v-model="formModel.teleCmdPrefix" />
+                        </el-form-item>
+                        <el-form-item label="传送间隔, 单位: 秒" prop="teleInterval" required>
+                            <el-input v-model="formModel.teleInterval" />
+                        </el-form-item>
+                        <el-form-item label="查询列表提示" prop="locationItemTip" required>
+                            <el-input v-model="formModel.locationItemTip" />
+                        </el-form-item>
+                        <el-form-item label="传送成功提示" prop="teleSuccessTip" required>
+                            <el-input v-model="formModel.teleSuccessTip" />
+                        </el-form-item>
+                        <el-form-item label="积分不足提示" prop="pointsNotEnoughTip" required>
+                            <el-input v-model="formModel.pointsNotEnoughTip" />
+                        </el-form-item>
+                        <el-form-item label="正在冷却提示" prop="coolingTip" required>
+                            <el-input v-model="formModel.coolingTip" />
+                        </el-form-item>
+                        <el-form-item label="无城市信息提示" prop="noLocation" required>
+                            <el-input v-model="formModel.noLocation" />
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="save">保存</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div>
+                        <el-text style="color: green">提示: 游戏内输入hc+空格+城市名称 进行传送</el-text>
+                    </div>
+                </div>
+            </el-scrollbar>
+        </el-card>
+    </div>
 </template>
 
 <script>
@@ -74,6 +80,13 @@ const variables = ['CityName', 'TeleInterval', 'PointsRequired', 'CooldownSecond
 .teleport-city-settings {
     .tag {
         margin-right: 8px;
+    }
+    .el-card {
+        height: 100%;
+        background-color: #ffffffaf;
+        :deep(.el-card__body) {
+            height: calc(100% - 40px);
+        }
     }
 }
 </style>

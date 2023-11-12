@@ -4,7 +4,7 @@
             <div class="search-container">
                 <el-checkbox v-model="itemsChecked" label="物品" />
                 <el-checkbox v-model="blocksChecked" label="方块" />
-                <el-checkbox v-model="devItemsChecked" label="开发方块" />
+                <el-checkbox v-model="devItemsChecked" label="开发(对用户隐藏的类型)" />
                 <el-input class="input" v-model="queryParams.keyword" placeholder clearable @keyup.enter.native="search"></el-input>
                 <el-button class="button" type="primary" @click="search">
                     <template #icon><Icon name="search" /></template>
@@ -12,19 +12,19 @@
                 </el-button>
             </div>
             <div class="items-container">
-                <el-scrollbar v-infinite-scroll="load" always>
-                    <el-tooltip placement="right-end" :show-after="500" v-for="item in items" :key="item.id">
-                        <el-image class="image" :src="item.url" lazy />
-                        <template #content>
-                            {{ item.isBlock ? '方块' : '物品' }} Id {{ item.id }}<br />
-                            名称 {{ item.itemName }}<br />
-                            本地化名称 {{ item.localizationName }}<br />
-                            图标 {{ item.itemIcon }}<br />
-                            图标颜色 {{ item.iconColor }}<br />
-                            最大堆叠数量 {{ item.maxStackAllowed }}<br />
-                        </template>
-                    </el-tooltip>
-                    <el-empty :image-size="200" v-if="items.length === 0" style="width: 100%" />
+                <el-scrollbar always>
+                    <div class="scroll-area" v-infinite-scroll="load">
+                        <el-image
+                            class="image"
+                            v-for="(item, index) in items"
+                            :key="index"
+                            :src="item.url"
+                            lazy
+                            @mouseover="handleMouseover(item, $event)"
+                            @mouseleave="handleMouseleave"
+                        />
+                        <el-empty :image-size="200" v-if="items.length === 0" style="width: 100%" />
+                    </div>
                 </el-scrollbar>
             </div>
         </el-card>
@@ -39,6 +39,7 @@ export default {
 
 <script setup>
 import { getItemBlocks } from '~/api/server-management';
+import { showTooltip, closeTooltip } from '~/components/SingletonTooltip/index.js';
 
 const items = reactive([]);
 const itemsChecked = ref(true);
@@ -92,11 +93,8 @@ const getData = async () => {
 
         for (let i = 0; i < len; i++) {
             const item = data[i];
-            const url = getIconUrl(item);
-            items.push({
-                url: url,
-                ...item,
-            });
+            item.url = getIconUrl(item);
+            items.push(item);
         }
     } finally {
         loading.close();
@@ -111,9 +109,24 @@ const search = () => {
 
 watch([itemsChecked, blocksChecked, devItemsChecked], search);
 
-const load = () => {
+const load = async () => {
     queryParams.pageNumber += 1;
-    if (queryParams.pageNumber < 10) getData();
+    await getData();
+};
+
+const handleMouseover = (item, event) => {
+    const content = `
+        ${item.isBlock ? '方块' : '物品'}ID: ${item.id}<br />
+        名称: ${item.itemName}<br />
+        本地化名称: ${item.localizationName}<br />
+        图标: ${item.itemIcon}<br />
+        图标颜色: ${item.iconColor}<br />
+        最大堆叠数量: ${item.maxStackAllowed}<br />`;
+
+    showTooltip({ virtualRef: event.target, content: content, placement: 'right-end' });
+};
+const handleMouseleave = () => {
+    closeTooltip();
 };
 </script>
 
@@ -143,18 +156,19 @@ const load = () => {
     .items-container {
         height: calc(100% - 48px);
         margin-top: 8px;
-        overflow: hidden;
-        :deep(.el-scrollbar__view) {
+
+        .scroll-area {
             display: flex;
             flex-wrap: wrap;
-        }
 
-        .image {
-            margin: 1px;
-            display: block;
-            height: 160px;
-            width: 160px;
-            background-color: rgba(96, 96, 96, 0.5);
+            .image {
+                margin: 1px;
+                display: block;
+                height: 160px;
+                width: 160px;
+                background-color: rgba(96, 96, 96, 0.5);
+                border-radius: 2px;
+            }
         }
     }
 }

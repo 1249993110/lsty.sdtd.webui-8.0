@@ -72,16 +72,9 @@ const tree = [
                 icon: 'settings',
             },
             {
-                path: 'game-notice',
+                path: 'game-notice/settings',
                 label: '游戏公告',
                 icon: 'notice',
-                children: [
-                    {
-                        path: 'settings',
-                        label: '配置',
-                        icon: 'settings',
-                    },
-                ],
             },
             {
                 path: 'points-system',
@@ -90,12 +83,12 @@ const tree = [
                 children: [
                     {
                         path: 'settings',
-                        label: '配置',
+                        label: '积分配置',
                         icon: 'settings',
                     },
                     {
                         path: 'management',
-                        label: '管理',
+                        label: '积分管理',
                         icon: 's-management',
                     },
                 ],
@@ -107,59 +100,52 @@ const tree = [
                 children: [
                     {
                         path: 'settings',
-                        label: '配置',
+                        label: '商店配置',
                         icon: 'settings',
                     },
                     {
                         path: 'management',
-                        label: '管理',
+                        label: '商店管理',
                         icon: 's-management',
                     },
                 ],
             },
             {
-                path: 'tele-system',
-                label: '传送系统',
-                icon: 'position',
+                path: 'tele-system/friend/settings',
+                label: '好友传送',
+                icon: 'friend',
+            },
+            {
+                path: 'tele-system/city',
+                label: '城市传送',
+                icon: 'city',
                 children: [
                     {
-                        path: 'friend/settings',
-                        label: '好友传送',
-                        icon: 'friend',
+                        path: 'settings',
+                        label: '城市传送配置',
+                        icon: 'settings',
                     },
                     {
-                        path: 'city',
-                        label: '城市传送',
-                        icon: 'city',
-                        children: [
-                            {
-                                path: 'settings',
-                                label: '配置',
-                                icon: 'settings',
-                            },
-                            {
-                                path: 'management',
-                                label: '管理',
-                                icon: 's-management',
-                            },
-                        ],
+                        path: 'management',
+                        label: '城市传送管理',
+                        icon: 's-management',
+                    },
+                ],
+            },
+            {
+                path: 'tele-system/home',
+                label: '私人传送',
+                icon: 'home',
+                children: [
+                    {
+                        path: 'settings',
+                        label: '私人传送配置',
+                        icon: 'settings',
                     },
                     {
-                        path: 'home',
-                        label: '私人传送',
-                        icon: 'home',
-                        children: [
-                            {
-                                path: 'settings',
-                                label: '配置',
-                                icon: 'settings',
-                            },
-                            {
-                                path: 'management',
-                                label: '管理',
-                                icon: 's-management',
-                            },
-                        ],
+                        path: 'management',
+                        label: '私人传送管理',
+                        icon: 's-management',
                     },
                 ],
             },

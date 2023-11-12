@@ -1,10 +1,16 @@
 <template>
     <div class="live-chat">
-        <div id="live-chat-content"></div>
-        <div class="send-container">
-            <el-input placeholder="请输入内容" v-model="message" clearable @keyup.enter.native="sendMessage"> </el-input>
-            <el-button class="button" type="primary" @click="sendMessage">发送消息</el-button>
-        </div>
+        <el-card shadow="always">
+            <div class="live-chat-container">
+                <el-scrollbar always>
+                    <div id="live-chat-content"></div>
+                </el-scrollbar>
+            </div>
+            <div class="send-container">
+                <el-input placeholder="请输入内容" v-model="message" clearable @keyup.enter.native="sendMessage"> </el-input>
+                <el-button class="button" type="primary" @click="sendMessage">发送消息</el-button>
+            </div>
+        </el-card>
     </div>
 </template>
 
@@ -85,7 +91,7 @@ const appendMessage = (chatMessage) => {
 
 emitter.on(eventTypes.OnChatMessage, (chatMessage) => {
     if (!isActivated) {
-        if(messageBuffer.length > 100){
+        if (messageBuffer.length > 100) {
             messageBuffer.shift();
         }
         messageBuffer.push(chatMessage);
@@ -97,28 +103,34 @@ emitter.on(eventTypes.OnChatMessage, (chatMessage) => {
 
 <style scoped lang="scss">
 .live-chat {
-    height: 100%;
-    #live-chat-content {
-        height: calc(100% - 60px);
-        overflow: auto;
-        border: 1px solid rgb(24, 173, 121);
-        padding: 1px;
+    .el-card {
+        height: 100%;
+        background-color: #ffffffaf;
+        :deep(.el-card__body) {
+            height: calc(100% - 40px);
 
-        :deep(p) {
-            margin: 1px;
-            word-wrap: break-word;
-            word-break: break-all;
-            font-size: 14px;
-            white-space: pre-wrap;
+            .live-chat-container{
+                height: calc(100% - 40px);
+            }
         }
-    }
 
-    .send-container {
-        margin-top: 8px;
-        display: flex;
+        #live-chat-content {
+            :deep(p) {
+                margin: 1px;
+                word-wrap: break-word;
+                word-break: break-all;
+                font-size: 14px;
+                white-space: pre-wrap;
+            }
+        }
 
-        .button {
-            margin-left: 8px;
+        .send-container {
+            margin-top: 8px;
+            display: flex;
+
+            .button {
+                margin-left: 8px;
+            }
         }
     }
 }

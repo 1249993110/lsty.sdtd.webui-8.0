@@ -23,7 +23,7 @@
             <el-table-column prop="platformId" label="平台Id" width="215" sortable> </el-table-column>
             <el-table-column prop="platformType" label="平台类型" width="85"> </el-table-column>
             <el-table-column prop="lastOnline" label="上次在线" width="165" sortable> </el-table-column>
-            <el-table-column prop="totalTimePlayed" label="总游戏时长" width="140" :formatter="format_totalTimePlayed" sortable> </el-table-column>
+            <el-table-column prop="totalTimePlayed" label="总游戏时长" width="150" :formatter="format_totalTimePlayed" sortable> </el-table-column>
             <el-table-column prop="level" label="等级" width="80" sortable> </el-table-column>
             <el-table-column prop="score" label="评分" width="80" sortable> </el-table-column>
             <el-table-column prop="position" label="玩家坐标" width="130" :formatter="format_position"> </el-table-column>

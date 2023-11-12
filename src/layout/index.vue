@@ -87,7 +87,7 @@ const activeMenus = computed(() => {
             }
 
             .el-tabs__item.is-active {
-                border-bottom-color: mediumblue;
+                border-bottom: 2px solid mediumblue;
             }
         }
     }
