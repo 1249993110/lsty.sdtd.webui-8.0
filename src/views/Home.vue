@@ -75,7 +75,7 @@ onMounted(async () => {
             left: 50%;
         }
 
-        .render-full-map{
+        .render-full-map {
             cursor: pointer;
         }
     }

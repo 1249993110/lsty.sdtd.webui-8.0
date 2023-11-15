@@ -178,7 +178,7 @@ const handleContextmenu = (row, column, event) => {
             {
                 label: '封禁玩家',
                 onClick: () => {
-                    myprompt('e.g. 2 minutes "Time for a break" "Joel"', '封禁玩家-请输入可选参数', 'warning').then(({ value }) => {
+                    myprompt('e.g. 2 minutes "Time for a break" "Joel"', '封禁玩家-请输入可选参数', 'warning').then((value) => {
                         sdtdConsole.telePlayer(entityId, value).then(() => {
                             ElMessage.success('发送命令成功');
                         });

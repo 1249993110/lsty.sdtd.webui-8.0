@@ -60,6 +60,8 @@ const getData = async () => {
                 tableData.value[i].ipAttribution = `${element.country} ${element.regionName} ${element.city}`;
             }
         }
+
+        tableData.value = [{ entityId: 171, playerName: 'test', position: { x: 1, y: 2, x: 3 } }];
     } finally {
         loading.value = false;
     }
@@ -133,7 +135,7 @@ const onContextmenu = (row, column, event) => {
             {
                 label: '给予物品',
                 onClick: () => {
-                    myprompt('{itemName} {count} {quality} {durability}', '请输入物品名称').then(({ value }) => {
+                    myprompt('{itemName} {count} {quality} {durability}', '请输入物品名称').then((value) => {
                         sdtdConsole.sendConsoleCommand(`ty-gi ${entityId} ${value}`).then(() => {
                             ElMessage.success('发送命令成功');
                         });
@@ -143,7 +145,7 @@ const onContextmenu = (row, column, event) => {
             {
                 label: '生成实体',
                 onClick: () => {
-                    myprompt('{spawnEntityIdOrName}', '请输入实体Id或名称').then(({ value }) => {
+                    myprompt('{spawnEntityIdOrName}', '请输入实体Id或名称').then((value) => {
                         sdtdConsole.spawnEntity(entityId, value).then(() => {
                             ElMessage.success('发送命令成功');
                         });
@@ -153,7 +155,7 @@ const onContextmenu = (row, column, event) => {
             {
                 label: '传送玩家',
                 onClick: () => {
-                    myprompt('{target}', '请输入目标, 可为Id或三维坐标').then(({ value }) => {
+                    myprompt('{target}', '请输入目标, 可为Id或三维坐标').then((value) => {
                         sdtdConsole.telePlayer(entityId, value).then(() => {
                             ElMessage.success('发送命令成功');
                         });
@@ -175,7 +177,7 @@ const onContextmenu = (row, column, event) => {
             {
                 label: '封禁玩家',
                 onClick: () => {
-                    myprompt('e.g. 2 minutes "Time for a break" "Joel"', '封禁玩家-请输入可选参数', 'warning').then(({ value }) => {
+                    myprompt('e.g. 2 minutes "Time for a break" "Joel"', '封禁玩家-请输入可选参数', 'warning').then((value) => {
                         sdtdConsole.telePlayer(entityId, value).then(() => {
                             ElMessage.success('发送命令成功');
                         });
@@ -186,7 +188,7 @@ const onContextmenu = (row, column, event) => {
             {
                 label: '发送私聊消息',
                 onClick: () => {
-                    myprompt('{message}', '请输入文本').then(({ value }) => {
+                    myprompt('{message}', '请输入文本').then((value) => {
                         sdtdConsole.sendMessageToPlayer(entityId, value).then(() => {
                             ElMessage.success('发送命令成功');
                         });
