@@ -61,7 +61,7 @@ const getData = async () => {
             }
         }
 
-        tableData.value = [{ entityId: 171, playerName: 'test', position: { x: 1, y: 2, x: 3 } }];
+        //tableData.value = [{ entityId: 171, playerName: 'test', position: { x: 1, y: 2, x: 3 } }];
     } finally {
         loading.value = false;
     }
