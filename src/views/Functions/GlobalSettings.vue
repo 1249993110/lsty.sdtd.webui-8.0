@@ -13,6 +13,9 @@
                         <el-form-item label="聊天命令前缀" prop="chatCommandPrefix">
                             <el-input v-model="formModel.chatCommandPrefix" />
                         </el-form-item>
+                        <el-form-item label="聊天命令分隔符" prop="chatCommandSeparator">
+                            <el-input v-model="formModel.chatCommandSeparator" />
+                        </el-form-item>
                         <el-form-item label="聊天消息错误提示" prop="handleChatMessageError">
                             <el-input v-model="formModel.handleChatMessageError" />
                         </el-form-item>
@@ -38,6 +41,7 @@ import * as api from '~/api/settings.js';
 const formModel = reactive({
     serverName: '',
     chatCommandPrefix: '',
+    chatCommandSeparator: '',
     handleChatMessageError: '',
 });
 
